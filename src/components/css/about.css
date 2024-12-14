@@ -1,0 +1,51 @@
+
+.about-us-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    line-height: 1.8;
+    background-color: #bfc6cd;
+    color: #333;
+  }
+  
+  h1, h2 {
+    color: #033f77;
+    margin-bottom: 10px;
+  }
+  h1{
+    display: flex;
+    justify-content: center;
+  }
+  .intro-text {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .explore-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .explore-list li {
+    margin: 10px 0;
+    font-size: 1rem;
+  }
+  
+  .explore-list strong {
+    color: #007bff;
+  }
+  
+  .contact-button {
+    margin-top: 20px;
+    background-color: #28a745;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .contact-button:hover {
+    background-color: #218838;
+  }
+  

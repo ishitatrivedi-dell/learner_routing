@@ -1,0 +1,43 @@
+/* Reset styles for removing default browser margins and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  background-color: rgb(44, 45, 41);
+  width: 100vw;
+  height: 3em;
+  display: flex;
+  flex-direction: row;
+  gap: 15em;
+  align-items: center;
+  
+}
+
+nav a {
+  text-decoration: none; /* Remove underlines from links */
+  color: #ffdb58; /* Gold/yellow color for links */
+  font-size: 18px; /* Font size for links */
+  font-weight: bold; /* Make the text bold */
+  text-transform: uppercase; /* Make text uppercase */
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+nav a.blue {
+  color: cyan; /* Highlight active link with cyan color */
+}
+
+nav a:hover {
+  color: white; /* White text on hover */
+}
+
+nav li {
+  list-style-type: none;
+  margin-left: 1.5em;
+}
