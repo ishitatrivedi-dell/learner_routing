@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/mealdb.css"; // CSS file for styling
 
 function Meal() {
   const [query, setQuery] = useState(""); // Search query state
   const [meals, setMeals] = useState([]); // Fetched meal data state
   const [loading, setLoading] = useState(false); // Loading state
-  const [selectedMeal, setSelectedMeal] = useState(null); // Selected meal state
+  const [randomMeals, setRandomMeals] = useState([]); // Multiple random meals state
+
+  // Function to fetch multiple random meals from API
+  const fetchRandomMeals = async () => {
+    try {
+      const responses = await Promise.all(
+        Array.from({ length: 10 }).map(() =>
+          fetch("https://www.themealdb.com/api/json/v1/1/random.php")
+        )
+      );
+      const data = await Promise.all(responses.map((res) => res.json()));
+      const mealsData = data.map((item) => item.meals[0]);
+      setRandomMeals(mealsData);
+    } catch (error) {
+      console.error("Error fetching random meals:", error);
+    }
+  };
 
   // Function to fetch meals from API
   const fetchMeals = async (searchTerm) => {
@@ -30,23 +46,17 @@ function Meal() {
     if (searchTerm.trim() !== "") {
       fetchMeals(searchTerm);
     } else {
-      setMeals([]);
+      setMeals([]); // Clear results if search is empty
     }
   };
 
-  // Handle click on meal image to display modal
-  const handleMealClick = (meal) => {
-    setSelectedMeal(meal); // Set the selected meal
-  };
-
-  // Close the modal
-  const handleClearSelection = () => {
-    setSelectedMeal(null); // Clear the selected meal
-  };
+  // Fetch random meals on component mount
+  useEffect(() => {
+    fetchRandomMeals();
+  }, []);
 
   return (
     <>
-      {/* Header */}
       <div className="header">
         <h1>Welcome to Meal Page</h1>
       </div>
@@ -54,7 +64,6 @@ function Meal() {
         "Every dish is a journey, a story told through flavors and ingredients."
       </h4>
 
-      {/* Search Bar */}
       <div className="search">
         <input
           type="text"
@@ -64,59 +73,30 @@ function Meal() {
         />
       </div>
 
-      {/* Display Meal Details in Popup */}
-      {selectedMeal && (
-        <div className="meal-modal">
-          <div className="modal-content">
-            <button onClick={handleClearSelection} className="clear-btn">
-              &times; Close
-            </button>
-            <img
-              src={selectedMeal.strMealThumb}
-              alt={selectedMeal.strMeal}
-              className="meal-detail-img"
-            />
-            <h2>{selectedMeal.strMeal}</h2>
-            <p>
-              <strong>Category:</strong> {selectedMeal.strCategory}
-            </p>
-            <p>
-              <strong>Area:</strong> {selectedMeal.strArea}
-            </p>
-            <p>
-              <strong>Instructions:</strong> {selectedMeal.strInstructions}
-            </p>
-            <p>
-              <strong>Ingredients:</strong>
-            </p>
-            <ul>
-              {Array.from({ length: 20 }, (_, i) => i + 1).map((i) => {
-                const ingredient = selectedMeal[`strIngredient${i}`];
-                const measure = selectedMeal[`strMeasure${i}`];
-                return ingredient ? (
-                  <li key={i}>
-                    {ingredient} {measure ? `- ${measure}` : ""}
-                  </li>
-                ) : null;
-              })}
-            </ul>
-          </div>
-        </div>
-      )}
+      {/* Display Multiple Random Meals */}
+      <div className="random-meal-container">
+        {randomMeals.length > 0 &&
+          randomMeals.map((meal) => (
+            <div key={meal.idMeal} className="random-meal-card">
+              <img
+                src={meal.strMealThumb}
+                alt={meal.strMeal}
+                className="random-meal-img"
+              />
+              <h3 className="random-meal-title">{meal.strMeal}</h3>
+            </div>
+          ))}
+      </div>
 
-      {/* Display Meals */}
       <div className="meal-container">
         {loading && <p>Loading...</p>}
         {!loading && meals.length === 0 && query && (
           <p className="no-results">No meals found. Try another search!</p>
         )}
+
         <div className="meal-grid">
           {meals.map((meal) => (
-            <div
-              key={meal.idMeal}
-              className="meal-card"
-              onClick={() => handleMealClick(meal)}
-            >
+            <div key={meal.idMeal} className="meal-card">
               <img
                 src={meal.strMealThumb}
                 alt={meal.strMeal}

@@ -6,7 +6,7 @@ function Potter() {
 
   return (
     <div className="potter-container">
-      <h1>Harry Potter Characters</h1>
+      <h1>Harry Potter </h1>
 
       
     </div>

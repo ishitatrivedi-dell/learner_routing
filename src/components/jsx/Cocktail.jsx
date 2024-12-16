@@ -1,13 +1,29 @@
 import React, { useState, useEffect } from "react";
-import "../css/cocktail.css"; // Use your existing CSS file
+import "../css/cocktail.css"; // CSS file for styling
 
 function Cocktail() {
   const [query, setQuery] = useState(""); // Search query state
-  const [cocktails, setCocktails] = useState([]); // Fetched data state
+  const [cocktails, setCocktails] = useState([]); // Fetched cocktail data state
   const [loading, setLoading] = useState(false); // Loading state
-  const [selectedCocktail, setSelectedCocktail] = useState(null); // Selected cocktail state
+  const [randomCocktails, setRandomCocktails] = useState([]); // Multiple random cocktails state
 
-  // Function to fetch cocktails from API
+  // Function to fetch multiple random cocktails from API
+  const fetchRandomCocktails = async () => {
+    try {
+      const responses = await Promise.all(
+        Array.from({ length: 15 }).map(() =>
+          fetch("https://www.thecocktaildb.com/api/json/v1/1/random.php")
+        )
+      );
+      const data = await Promise.all(responses.map((res) => res.json()));
+      const cocktailsData = data.map((item) => item.drinks[0]);
+      setRandomCocktails(cocktailsData);
+    } catch (error) {
+      console.error("Error fetching random cocktails:", error);
+    }
+  };
+
+  // Function to fetch cocktails from API based on search
   const fetchCocktails = async (searchTerm) => {
     setLoading(true);
     try {
@@ -15,7 +31,7 @@ function Cocktail() {
         `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`
       );
       const data = await response.json();
-      setCocktails(data.drinks || []);
+      setCocktails(data.drinks || []); // Set cocktails or empty array if no results
     } catch (error) {
       console.error("Error fetching cocktails:", error);
       setCocktails([]);
@@ -30,32 +46,24 @@ function Cocktail() {
     if (searchTerm.trim() !== "") {
       fetchCocktails(searchTerm);
     } else {
-      setCocktails([]);
+      setCocktails([]); // Clear results if search is empty
     }
   };
 
-  // Handle click on cocktail image
-  const handleCocktailClick = (cocktail) => {
-    setSelectedCocktail(cocktail);
-  };
-
-  // Clear the selected cocktail
-  const handleClearSelection = () => {
-    setSelectedCocktail(null);
-  };
+  // Fetch random cocktails on component mount
+  useEffect(() => {
+    fetchRandomCocktails();
+  }, []);
 
   return (
     <>
-      {/* Header */}
       <div className="header">
         <h1>Welcome to Cocktail Page</h1>
       </div>
       <h4>
-        "Every cocktail tells a story, a blend of flavors that captivate the
-        senses."
+        "A cocktail is a journey into a world of flavors and creativity."
       </h4>
 
-      {/* Search Bar */}
       <div className="search">
         <input
           type="text"
@@ -65,59 +73,37 @@ function Cocktail() {
         />
       </div>
 
-      {/* Display Cocktail Details in Popup */}
-      {selectedCocktail && (
-        <div className="cocktail-modal">
-          <div className="modal-content">
-            <button onClick={handleClearSelection} className="clear-btn">
-              &times; Close
-            </button>
-            <img
-              src={selectedCocktail.strDrinkThumb}
-              alt={selectedCocktail.strDrink}
-              className="cocktail-detail-img"
-            />
-            <h2>{selectedCocktail.strDrink}</h2>
-            <p><strong>Category:</strong> {selectedCocktail.strCategory}</p>
-            <p><strong>Alcoholic:</strong> {selectedCocktail.strAlcoholic}</p>
-            <p><strong>Glass:</strong> {selectedCocktail.strGlass}</p>
-            <p><strong>Instructions:</strong> {selectedCocktail.strInstructions}</p>
-            <p><strong>Ingredients:</strong></p>
-            <ul>
-              {Array.from({ length: 15 }, (_, i) => i + 1).map((i) => {
-                const ingredient = selectedCocktail[`strIngredient${i}`];
-                const measure = selectedCocktail[`strMeasure${i}`];
-                return ingredient ? (
-                  <li key={i}>
-                    {ingredient} {measure ? `- ${measure}` : ""}
-                  </li>
-                ) : null;
-              })}
-            </ul>
-          </div>
-        </div>
-      )}
+      {/* Display Multiple Random Cocktails */}
+      <div className="random-cocktail-container">
+        {randomCocktails.length > 0 &&
+          randomCocktails.map((cocktail) => (
+            <div key={cocktail.idDrink} className="random-cocktail-card">
+              <img
+                src={cocktail.strDrinkThumb}
+                alt={cocktail.strDrink}
+                className="random-cocktail-img"
+              />
+              <h3 className="random-cocktail-title">{cocktail.strDrink}</h3>
+            </div>
+          ))}
+      </div>
 
-      {/* Display Cocktails */}
       <div className="cocktail-container">
         {loading && <p>Loading...</p>}
         {!loading && cocktails.length === 0 && query && (
           <p className="no-results">No cocktails found. Try another search!</p>
         )}
+
         <div className="cocktail-grid">
-          {cocktails.map((drink) => (
-            <div
-              key={drink.idDrink}
-              className="cocktail-card"
-              onClick={() => handleCocktailClick(drink)}
-            >
+          {cocktails.map((cocktail) => (
+            <div key={cocktail.idDrink} className="cocktail-card">
               <img
-                src={drink.strDrinkThumb}
-                alt={drink.strDrink}
+                src={cocktail.strDrinkThumb}
+                alt={cocktail.strDrink}
                 className="cocktail-img"
               />
-              <h3 className="cocktail-title">{drink.strDrink}</h3>
-              <p className="cocktail-category">{drink.strCategory}</p>
+              <h3 className="cocktail-title">{cocktail.strDrink}</h3>
+              <p className="cocktail-category">{cocktail.strCategory}</p>
             </div>
           ))}
         </div>

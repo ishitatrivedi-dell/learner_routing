@@ -216,3 +216,41 @@
   color: #666;
   margin-bottom: 10px;
 }
+/* Random Cocktail Section for multiple cocktails */
+.random-cocktail-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  margin-top: 2em;
+}
+
+.random-cocktail-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 250px;
+  transition: transform 0.3s ease;
+  margin-bottom: 1.5em;
+}
+
+.random-cocktail-card:hover {
+  transform: scale(1.05);
+}
+
+.random-cocktail-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+}
+
+.random-cocktail-title {
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #333;
+}
+ 
