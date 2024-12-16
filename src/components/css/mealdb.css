@@ -1,104 +1,177 @@
-
+/* General Reset */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    background-color: rgb(240, 240, 240);
-    font-family: Arial, Helvetica, sans-serif;
-  }
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .header {
-    display: flex;
-    justify-content: center;
-    margin-top: 1em;
-  }
-  
-  h1 {
-    font-size: 2em;
-    color: #ff5733;
-  }
-  
-  h4 {
-    text-align: center;
-    font-size: 1.2em;
-    color: #555;
-    margin-top: 0.5em;
-  }
-  
-  .search {
-    display: flex;
-    justify-content: center;
-    margin: 2em 0;
-  }
-  
-  .search input {
-    width: 300px;
-    padding: 10px;
-    font-size: 1em;
-    border: 2px solid #ff5733;
-    border-radius: 5px;
-    outline: none;
-    transition: border-color 0.3s;
-  }
-  
-  .search input:focus {
-    border-color: #c70039;
-    box-shadow: 0 0 10px rgba(255, 87, 51, 0.5);
-  }
-  
-  .meal-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .no-results {
-    color: red;
-    font-size: 1.2em;
-    font-weight: bold;
-    margin-top: 2em;
-  }
-  
-  .meal-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5em;
-    margin: 2em auto;
-    width: 80%;
-  }
-  
-  .meal-card {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    transition: transform 0.3s ease;
-  }
-  
-  .meal-card:hover {
-    transform: scale(1.05);
-  }
-  
-  .meal-img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-  }
-  
-  .meal-title {
-    font-size: 1.2em;
-    margin: 10px 0;
-    color: #333;
-  }
-  
-  .meal-category {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 10px;
-  }
-  
+body {
+  background-color: rgb(240, 240, 240);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+h1 {
+  font-size: 2em;
+  color: #ff5733;
+}
+
+h4 {
+  text-align: center;
+  font-size: 1.2em;
+  color: #555;
+  margin-top: 0.5em;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
+}
+
+.search input {
+  width: 300px;
+  padding: 10px;
+  font-size: 1em;
+  border: 2px solid #ff5733;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search input:focus {
+  border-color: #c70039;
+  box-shadow: 0 0 10px rgba(255, 87, 51, 0.5);
+}
+
+.meal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.no-results {
+  color: red;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 2em;
+}
+
+.meal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5em;
+  margin: 2em auto;
+  width: 80%;
+}
+
+.meal-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.meal-card:hover {
+  transform: scale(1.05);
+}
+
+.meal-img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.meal-title {
+  font-size: 1.2em;
+  margin: 10px 0;
+  color: #333;
+}
+
+.meal-category {
+  font-size: 0.9em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* Modal Popup */
+.meal-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  max-height: 90%;
+  padding: 1.5em;
+  position: relative;
+  text-align: center;
+}
+
+.clear-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  color: #c70039;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.clear-btn:hover {
+  color: #ff5733;
+}
+
+.meal-detail-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1em;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 0.5em;
+}
+
+p {
+  color: #555;
+  margin: 0.5em 0;
+  line-height: 1.4;
+}
+
+ul {
+  text-align: left;
+  margin-top: 1em;
+  padding-left: 1.5em;
+}
+
+ul li {
+  margin-bottom: 0.5em;
+  color: #333;
+}

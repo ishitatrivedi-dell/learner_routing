@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
-import "../css/mealdb.css"; // Use your existing or new CSS file
+import React, { useState } from "react";
+import "../css/mealdb.css"; // CSS file for styling
 
-function Mealdb() {
+function Meal() {
   const [query, setQuery] = useState(""); // Search query state
-  const [meals, setMeals] = useState([]); // Fetched meals data state
+  const [meals, setMeals] = useState([]); // Fetched meal data state
   const [loading, setLoading] = useState(false); // Loading state
+  const [selectedMeal, setSelectedMeal] = useState(null); // Selected meal state
 
   // Function to fetch meals from API
   const fetchMeals = async (searchTerm) => {
@@ -14,7 +15,7 @@ function Mealdb() {
         `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`
       );
       const data = await response.json();
-      setMeals(data.meals || []); // Ensure no errors on empty response
+      setMeals(data.meals || []); // Set meals or empty array if no results
     } catch (error) {
       console.error("Error fetching meals:", error);
       setMeals([]);
@@ -33,14 +34,24 @@ function Mealdb() {
     }
   };
 
+  // Handle click on meal image to display modal
+  const handleMealClick = (meal) => {
+    setSelectedMeal(meal); // Set the selected meal
+  };
+
+  // Close the modal
+  const handleClearSelection = () => {
+    setSelectedMeal(null); // Clear the selected meal
+  };
+
   return (
     <>
       {/* Header */}
       <div className="header">
-        <h1>Welcome to the MealDB Page</h1>
+        <h1>Welcome to Meal Page</h1>
       </div>
       <h4>
-        "Good food brings people together and leaves lasting memories."
+        "Every dish is a journey, a story told through flavors and ingredients."
       </h4>
 
       {/* Search Bar */}
@@ -53,6 +64,46 @@ function Mealdb() {
         />
       </div>
 
+      {/* Display Meal Details in Popup */}
+      {selectedMeal && (
+        <div className="meal-modal">
+          <div className="modal-content">
+            <button onClick={handleClearSelection} className="clear-btn">
+              &times; Close
+            </button>
+            <img
+              src={selectedMeal.strMealThumb}
+              alt={selectedMeal.strMeal}
+              className="meal-detail-img"
+            />
+            <h2>{selectedMeal.strMeal}</h2>
+            <p>
+              <strong>Category:</strong> {selectedMeal.strCategory}
+            </p>
+            <p>
+              <strong>Area:</strong> {selectedMeal.strArea}
+            </p>
+            <p>
+              <strong>Instructions:</strong> {selectedMeal.strInstructions}
+            </p>
+            <p>
+              <strong>Ingredients:</strong>
+            </p>
+            <ul>
+              {Array.from({ length: 20 }, (_, i) => i + 1).map((i) => {
+                const ingredient = selectedMeal[`strIngredient${i}`];
+                const measure = selectedMeal[`strMeasure${i}`];
+                return ingredient ? (
+                  <li key={i}>
+                    {ingredient} {measure ? `- ${measure}` : ""}
+                  </li>
+                ) : null;
+              })}
+            </ul>
+          </div>
+        </div>
+      )}
+
       {/* Display Meals */}
       <div className="meal-container">
         {loading && <p>Loading...</p>}
@@ -61,7 +112,11 @@ function Mealdb() {
         )}
         <div className="meal-grid">
           {meals.map((meal) => (
-            <div key={meal.idMeal} className="meal-card">
+            <div
+              key={meal.idMeal}
+              className="meal-card"
+              onClick={() => handleMealClick(meal)}
+            >
               <img
                 src={meal.strMealThumb}
                 alt={meal.strMeal}
@@ -77,4 +132,4 @@ function Mealdb() {
   );
 }
 
-export default Mealdb;
+export default Meal;
