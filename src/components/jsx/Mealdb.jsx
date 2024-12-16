@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import "../css/mealdb.css"; // CSS file for styling
 
 function Meal() {
-  const [query, setQuery] = useState(""); // Search query state
-  const [meals, setMeals] = useState([]); // Fetched meal data state
-  const [loading, setLoading] = useState(false); // Loading state
-  const [randomMeals, setRandomMeals] = useState([]); // Multiple random meals state
+  const [query, setQuery] = useState("");
+  const [meals, setMeals] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [randomMeals, setRandomMeals] = useState([]);
 
-  // Function to fetch multiple random meals from API
   const fetchRandomMeals = async () => {
     try {
       const responses = await Promise.all(
@@ -23,34 +22,39 @@ function Meal() {
     }
   };
 
-  // Function to fetch meals from API
   const fetchMeals = async (searchTerm) => {
     setLoading(true);
     try {
       const response = await fetch(
         `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchTerm}`
+        
       );
       const data = await response.json();
-      setMeals(data.meals || []); // Set meals or empty array if no results
+
+      // Check if the API returned meals
+      if (data.meals && data.meals.length > 0) {
+        setMeals(data.meals);
+      } else {
+        setMeals([]); // Set meals to empty if no results
+      }
     } catch (error) {
       console.error("Error fetching meals:", error);
       setMeals([]);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  // Handle search input change
   const handleSearch = (e) => {
     const searchTerm = e.target.value;
     setQuery(searchTerm);
     if (searchTerm.trim() !== "") {
       fetchMeals(searchTerm);
     } else {
-      setMeals([]); // Clear results if search is empty
+      setMeals([]);
     }
   };
 
-  // Fetch random meals on component mount
   useEffect(() => {
     fetchRandomMeals();
   }, []);

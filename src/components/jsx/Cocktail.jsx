@@ -28,9 +28,10 @@ function Cocktail() {
     setLoading(true);
     try {
       const response = await fetch(
-        `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchTerm}`
+        `www.thecocktaildb.com/api/json/v1/1/search.php?i=${searchTerm}`
       );
       const data = await response.json();
+      console.log("Fetched data:", data); // Debugging line to log the response
       setCocktails(data.drinks || []); // Set cocktails or empty array if no results
     } catch (error) {
       console.error("Error fetching cocktails:", error);
@@ -40,15 +41,15 @@ function Cocktail() {
   };
 
   // Handle search input change
-  const handleSearch = (e) => {
-    const searchTerm = e.target.value;
-    setQuery(searchTerm);
-    if (searchTerm.trim() !== "") {
-      fetchCocktails(searchTerm);
-    } else {
-      setCocktails([]); // Clear results if search is empty
-    }
-  };
+  // const handleSearch = (e) => {
+  //   const searchTerm = e.target.value;
+  //   setQuery(searchTerm);
+  //   if (searchTerm.trim() !== "") {
+  //     fetchCocktails(searchTerm);
+  //   } else {
+  //     setCocktails([]); // Clear results if search is empty
+  //   }
+  // };
 
   // Fetch random cocktails on component mount
   useEffect(() => {
@@ -69,7 +70,7 @@ function Cocktail() {
           type="text"
           placeholder="Search for a cocktail..."
           value={query}
-          onChange={handleSearch}
+          onChange={(e) => setQuery(e.target.value)}
         />
       </div>
 

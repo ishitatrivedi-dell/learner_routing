@@ -5,6 +5,7 @@ import Cocktail from "./components/jsx/Cocktail.jsx";
 import Mealdb from "./components/jsx/Mealdb.jsx";
 import Potter from "./components/jsx/Potter.jsx";
 import About from "./components/jsx/About.jsx";
+import AboutUs from "./components/jsx/About.jsx";
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<About />} />
+        <Route path="/" element={<AboutUs />} />
         <Route path="/bank" element={<Bank />} />
         <Route path="/cocktail" element={<Cocktail />} />
         <Route path="/mealdb" element={<Mealdb />} />
