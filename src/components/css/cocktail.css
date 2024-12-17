@@ -1,17 +1,73 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f7f7f7;
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header Styling */
+.header {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  padding: 1.5em 0;
+  text-align: center;
+  color: #fff;
+}
+
+.header h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+h4 {
+  text-align: center;
+  font-size: 1.2em;
+  color: #555;
+  margin: 1em 0;
+}
+
+/* Search Bar */
+.search {
+  display: flex;
+  justify-content: center;
+  margin: 2em 0;
+}
 
 .search input {
-  padding: 10px 15px;
   width: 300px;
+  padding: 10px 15px;
   font-size: 1em;
-  border: 2px solid #007bff;
-  border-radius: 5px;
+  border: 2px solid #ff7e5f;
+  border-radius: 25px;
   outline: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s ease-in-out;
 }
 
 .search input:focus {
-  border-color: #0056b3;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  border-color: #e6492d;
+  box-shadow: 0 0 10px rgba(255, 126, 95, 0.5);
+}
+
+/* Loading Text */
+.loading {
+  text-align: center;
+  font-size: 1.2em;
+  color: #888;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  font-size: 1.3em;
+  color: #ff4d4d;
+  margin-top: 2em;
 }
 
 /* Cocktail Container */
@@ -19,167 +75,159 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 2em;
-  width: 100%; /* Ensure the container occupies full width */
-}
-
-/* No Results */
-.no-results {
-  color: red;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-top: 2em;
-  text-align: center;
+  margin-top: 1em;
 }
 
 /* Cocktail Grid */
 .cocktail-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 1.5em;
-  margin-top: 2em;
-  width: 80%; /* Adjust width for better responsiveness */
-  overflow: visible; /* Ensure no overflow clipping */
+  width: 90%;
+  margin: 2em auto;
 }
 
 /* Cocktail Card */
 .cocktail-card {
-  background-color: #fff;
-  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cocktail-card:hover {
   transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
 }
 
 .cocktail-img {
   width: 100%;
-  height: 150px;
+  height: 180px;
   object-fit: cover;
 }
 
 .cocktail-title {
-  font-size: 1.2em;
+  font-size: 1.5em;
   color: #333;
   margin: 10px 0;
+  font-weight: 600;
 }
 
 .cocktail-category {
-  font-size: 0.9em;
-  color: #666;
+  font-size: 1em;
+  color: #777;
   margin-bottom: 10px;
 }
 
-/* Random Cocktail Section */
-.random-cocktail-container {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.5em;
-  margin-top: 2em;
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 2em;
+  }
+
+  .search input {
+    width: 80%;
+    font-size: 0.9em;
+  }
+
+  .cocktail-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.random-cocktail-card {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  width: 250px;
-  transition: transform 0.3s ease;
-  margin-bottom: 1.5em;
-}
-
-.random-cocktail-card:hover {
-  transform: scale(1.05);
-}
-
-.random-cocktail-img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-bottom: 1px solid #ddd;
-}
-
-.random-cocktail-title {
-  font-size: 1.2em;
-  margin: 10px 0;
-  color: #333;
-}
-
-/* Cocktail Modal */
-.cocktail-modal {
+/* Modal Overlay */
+.modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Ensure the modal appears above other content */
+  z-index: 1000;
 }
 
+/* Modal Content */
 .modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
+  background: #fff;
+  width: 90%;
   max-width: 600px;
-  width: 80%;
-  position: relative;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.cocktail-detail-img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
   border-radius: 10px;
-}
-
-.clear-btn {
-  background-color: #f44336;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-
-.clear-btn:hover {
-  background-color: #d32f2f;
-}
-
-/* General Layout Fixes */
-.cocktail-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 2em;
-}
-
-.no-results {
-  color: red;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-top: 2em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  max-height: 90%;
+  padding: 1.5em;
+  position: relative;
   text-align: center;
 }
 
-.cocktail-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5em;
-  margin-top: 2em;
-  width: 80%;
-  overflow: visible; /* Ensure no clipping */
+.modal-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 1em;
 }
+
+.modal-content h2 {
+  color: #333;
+  margin-bottom: 0.5em;
+}
+
+.modal-content h3 {
+  margin-top: 1em;
+  color: #ff7e5f;
+  font-size: 1.3em;
+}
+
+.modal-content ul {
+  list-style-type: disc;
+  text-align: left;
+  margin: 1em 0 0;
+  padding-left: 1.5em;
+  color: #555;
+}
+
+.modal-content p {
+  margin-top: 1em;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #e6492d;
+}
+
+/* Scrollbar for Modal (Optional) */
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: #bbb;
+}
+
