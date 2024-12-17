@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-
+import "../css/bank.css";
 const Bank = () => {
   const [states, setStates] = useState([]);
   const [districts, setDistricts] = useState([]);
