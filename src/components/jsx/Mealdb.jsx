@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/mealdb.css"; // Existing CSS file
 
 function Meal() {
@@ -63,7 +63,9 @@ function Meal() {
     }
     return ingredients;
   };
-
+    useEffect(()=> {
+      fetchMeals("c")
+    }, [])
   return (
     <>
       {/* Header Section */}

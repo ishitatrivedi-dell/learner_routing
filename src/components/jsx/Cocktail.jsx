@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../css/cocktail.css"; // Existing CSS file
 
 function Cocktail() {
@@ -63,6 +63,10 @@ function Cocktail() {
     }
     return ingredients;
   };
+
+  useEffect(()=> {
+    fetchCocktails("c")
+  }, [])
 
   return (
     <>
