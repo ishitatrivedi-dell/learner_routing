@@ -1,6 +1,19 @@
 import "../css/about.css"; 
 
 function AboutUs() {
+
+
+  const fetchapi = async() => {
+    try {
+      const response = await fetch("https://ish.onrender.com/users");
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching API data:", error);
+    }
+  }
+
+
   return (
     <div className="about-us-container">
 
@@ -42,10 +55,11 @@ function AboutUs() {
         We believe in creating experiences that inspire and empower you. Join us on this journey 
         as we continue to explore and grow together!
       </p>
-      <button className="contact-button">Get in Touch</button>
+      <button className="contact-button" onClick={fetchapi}>Get in Touch</button>
     </div>
   );
 }
 
 export default AboutUs;
+
 

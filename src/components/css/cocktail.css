@@ -6,7 +6,7 @@
 }
 
 body {
-  background-color: #f7f7f7;
+  background-color: #fff1f1;
   font-family: "Poppins", sans-serif;
   color: #333;
   line-height: 1.6;
@@ -14,7 +14,7 @@ body {
 
 /* Header Styling */
 .header {
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  background: linear-gradient(135deg, #686666, #ffffff);
   padding: 1.5em 0;
   text-align: center;
   color: #fff;
@@ -29,7 +29,7 @@ body {
 h4 {
   text-align: center;
   font-size: 1.2em;
-  color: #555;
+  color: #ffffff;
   margin: 1em 0;
 }
 

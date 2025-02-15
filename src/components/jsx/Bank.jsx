@@ -86,8 +86,8 @@ const Bank = () => {
 
       {/* IFSC Code Lookup Section */}
       <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl mb-8">
-        <label className="block text-gray-700 font-medium mb-2">Enter IFSC Code:</label>
-        <div className="flex items-center gap-4">
+        <label className="block-text-gray-700-font-medium-mb-2">Enter IFSC Code:</label>
+        <div className="flex-items-center-gap-4">
           <input
             type="text"
             className="border border-gray-300 rounded-md px-4 py-2 w-full focus:ring-2 focus:ring-blue-500"
@@ -118,7 +118,7 @@ const Bank = () => {
           { label: 'Center', value: selectedCenter, options: centers, onChange: setSelectedCenter },
           { label: 'Branch', value: selectedBranch, options: branches.map(branch => branch.replace('.json', '')), onChange: setSelectedBranch }]
           .map(({ label, value, options, onChange }, index) => (
-            <div key={index} className="bg-white shadow-md rounded-lg p-6">
+            <div key={index} className="bg-white-shadow-md-rounded-lgp-6">
               <label className="block text-gray-700 font-medium mb-2">Select {label}:</label>
               <select
                 className="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-2 focus:ring-blue-500"
@@ -137,7 +137,7 @@ const Bank = () => {
       {/* Branch Details */}
       {branchDetails && (
         <div className="mt-8 bg-white shadow-md rounded-lg p-6 w-full max-w-4xl">
-          <h2 className="text-lg font-bold text-gray-800 mb-2">Branch Details:</h2>
+          
           <pre className="text-sm text-gray-600 overflow-x-auto">{JSON.stringify(branchDetails, null, 2)}</pre>
         </div>
       )}
